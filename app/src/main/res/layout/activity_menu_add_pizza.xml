@@ -1,0 +1,149 @@
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etPizzaName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pizza Name"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etPizzaPrice25"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:hint="25 sm"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_edit"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/etPizzaPrice30"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_height="wrap_content"
+            android:hint="30 sm"
+            android:background="@drawable/shape_edit"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/etPizzaPrice35"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_height="wrap_content"
+            android:hint="35 sm"
+            android:background="@drawable/shape_edit"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Pizza Image"
+        android:textSize="16sp"
+        android:paddingTop="8dp" />
+
+    <ImageView
+        android:id="@+id/ivPizzaImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/btnUploadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload Image"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Ingredients"
+        android:textSize="16sp"
+        android:paddingTop="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/etIngredient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_edit"
+            android:hint="Masaliq"
+            android:inputType="text" />
+        <EditText
+            android:id="@+id/etIngredientPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/shape_edit"
+            android:hint="Narxi"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnAddIngredient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvIngredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnAddPizza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Pizza"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "280666934458",
+    "firebase_url": "https://tutorial-77928-default-rtdb.firebaseio.com",
+    "project_id": "tutorial-77928",
+    "storage_bucket": "tutorial-77928.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280666934458:android:d601596d96b6b33fb68683",
+        "android_client_info": {
+          "package_name": "com.asd.mypizza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280666934458-ss32rb5nvdrm61ivp8jtkdi0mohemqo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTL9_LSkdPFUxChMsoujVB9D7KjHolQVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280666934458-ss32rb5nvdrm61ivp8jtkdi0mohemqo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
