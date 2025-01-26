@@ -8,11 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.asd.mypizza.adapter.IngredientsAdapter
 import com.asd.mypizza.adapter.PizzaAdapter
 import com.asd.mypizza.data.models.IngredientItem
@@ -20,7 +17,6 @@ import com.asd.mypizza.data.models.Pizza
 import com.asd.mypizza.databinding.ActivityMainBinding
 import com.asd.mypizza.databinding.PizzaDetailsDialogBinding
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity(),PizzaAdapter.OnPizzaClickListener {
@@ -32,6 +28,8 @@ class MainActivity : AppCompatActivity(),PizzaAdapter.OnPizzaClickListener {
     private val firestore = FirebaseFirestore.getInstance()
     private val pizzaList = mutableListOf<Pizza>()
 
+    private var totalPrice: Int = 0
+    private var priceSizePizza: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -68,24 +66,33 @@ class MainActivity : AppCompatActivity(),PizzaAdapter.OnPizzaClickListener {
         val dialog = Dialog(this)
         dialog.setContentView(dialogBinding.root)
         dialogBinding.size25.isSelected = true
+        priceSizePizza = pizza.sizes["25 cm"]?.toInt()?:0
+
         dialogBinding.size25.setOnClickListener {
             dialogBinding.size30.isSelected = false
             dialogBinding.size35.isSelected = false
             it.isSelected = true
+            priceSizePizza = pizza.sizes["25 cm"]?.toInt()?:0
+            updateTotalPrice(dialogBinding)
         }
 
         dialogBinding.size30.setOnClickListener {
             dialogBinding.size25.isSelected = false
             dialogBinding.size35.isSelected = false
             it.isSelected = true
+            priceSizePizza = pizza.sizes["30 cm"]?.toInt()?:0
+            updateTotalPrice(dialogBinding)
         }
 
         dialogBinding.size35.setOnClickListener {
             dialogBinding.size25.isSelected = false
             dialogBinding.size30.isSelected = false
             it.isSelected = true
+            priceSizePizza = pizza.sizes["35 cm"]?.toInt()?:0
+            updateTotalPrice(dialogBinding)
         }
 
+        updateTotalPrice(dialogBinding)
         Glide.with(this).load(pizza.imageUrl).into(dialogBinding.imageOrder)
         dialogBinding.titleOrder.text = pizza.name
 
@@ -95,7 +102,7 @@ class MainActivity : AppCompatActivity(),PizzaAdapter.OnPizzaClickListener {
             } else {
                 selectedIngredients.remove(ingredient)
             }
-            updateTotalPrice()
+            updateTotalPrice(dialogBinding)
 
         }
         dialog.window?.apply {
@@ -119,14 +126,18 @@ class MainActivity : AppCompatActivity(),PizzaAdapter.OnPizzaClickListener {
                 dialogBinding.size35.isSelected -> "35 cm"
                 else -> "25 cm" // Default qiymat
             }
-
-//            saveOrderToFirestore(phoneNumber, pizza, selectedSize)
+            val phoneNumber = dialogBinding.phoneNumberEdt.text.toString()
+            val userLocation = dialogBinding.userLocation.text.toString()
+            saveOrderToFirestore(phoneNumber,userLocation, pizza,totalPrice,selectedSize, selectedIngredients)
             dialog.dismiss()
         }
     }
 
-    private fun updateTotalPrice() {
-
+    private fun updateTotalPrice(dialogBinding: PizzaDetailsDialogBinding) {
+        totalPrice = priceSizePizza + selectedIngredients.sumOf {
+            it.price
+        }
+        dialogBinding.totalPrice.text = totalPrice.toString()
     }
 
 
@@ -134,16 +145,24 @@ class MainActivity : AppCompatActivity(),PizzaAdapter.OnPizzaClickListener {
         showPizzaDetailDialog(pizza)
     }
 
-    private fun saveOrderToFirestore(phoneNumber: String, pizza: Pizza, size: String) {
+    private fun saveOrderToFirestore(
+        phoneNumber: String,
+        userLocation: String,
+        pizza: Pizza,
+        totalPrice: Int,
+        selectedSize: String,
+        selectedIngredients: MutableSet<IngredientItem>
+    ) {
 
         val orderData = hashMapOf(
             "phoneNumber" to phoneNumber,
             "pizzaName" to pizza.name,
-            "size" to size,
-            "ingredients" to pizza.ingredients,
+            "size" to selectedSize,
+            "ingredients" to selectedIngredients.toMutableList(),
             "imageUrl" to pizza.imageUrl,
-//            "price" to pizza.price,
-            "timestamp" to System.currentTimeMillis()
+            "price" to totalPrice,
+            "timestamp" to System.currentTimeMillis(),
+            "userLocation" to userLocation
         )
 
         firestore.collection("orders")
