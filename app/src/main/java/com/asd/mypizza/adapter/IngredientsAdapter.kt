@@ -12,8 +12,6 @@ import com.google.android.material.checkbox.MaterialCheckBox
 class IngredientsAdapter(private val ingredients: List<IngredientItem>,  private val onIngredientChange: (IngredientItem, Boolean) -> Unit) :
     RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder>() {
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_ingredients, parent, false)
